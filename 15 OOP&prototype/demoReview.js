@@ -114,7 +114,7 @@ Box.call(o,'Lee',100);// 对象冒充
 console.log(o.run());
 */
 
-
+/*
 function Box(name,age){	//创建一个对象
 	this.name = name;	//添加一个属性
 	this.age = age;
@@ -132,6 +132,80 @@ console.log(box1.run() == box2.run());
 console.log(box1.run == box2.run);  //因为比较的是引用地址 实例化后地址不同 因为Funciton 是引用类型
 
 // 但是还有一个问题 this 代表了 window
+
+*/
+
+
+/* 原型 */
+//构造函数
+/*
+function Box(name,age){
+
+	this.name = name;
+	this.age = age;
+	this.run = function(){
+		return this.name + this.age + "runing";
+	}
+}
+*/
+
+// 原型
+function Box(){} // 构造函数函数体内什么都没有，这里如果有，叫做势力属性，实例方法
+
+Box.prototype.name = 'Lee';	//原型属性
+Box.prototype.age = 100;
+Box.prototype.run = function(){ // 原型方法
+	return this.name + this.age + "runing...";
+};
+
+var box1 = new Box();
+console.log(box1.age);
+var box2 = new Box();
+// 如果是实例方法 不同的实例化 他们的方法地址是不同的
+// 如果是原型方法他们的地址是共享的
+
+console.log(box1.run == box2.run);
+console.log(box1.prototype);// 是一个对象访问不到
+console.log(box1.__proto__);// 这个属性是一个指针指向prototype原型对象
+
+console.log(box1.constructor);// 构造函数属性，可以获得构造函数本身
+								// 作用是被原型指针定位，然后获得构造函数本身
+
+
+// 判断一个对象实例是不是指向了原型对象
+console.log(Box.prototype.isPrototypeOf(box1));
+var obj = new Object();
+console.log(Object.prototype.isPrototypeOf(box1));
+
+// 原型模式的执行流程
+box1.name = 'Jack'; //实例属性，并不会重写原型属性 
+console.log(box1.name);	//就近原则
+
+// 删除实例中的属性
+delete box1.name;
+console.log(box1.name);
+
+// 判断实例中是否存在该属性
+console.log(box1.hasOwnProperty('age'));
+
+// 判断原型与实例中是否存在该属性
+console.log('name' in box1);
+
+// 判断原型中是否有该属性
+function isProperty(object,property){
+	return !object.hasOwnProperty(property) && (property in object)
+};
+console.log(isProperty(box1,'name'));
+
+
+
+
+
+
+
+
+
+
 
 
 
