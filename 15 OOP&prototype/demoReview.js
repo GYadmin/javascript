@@ -150,6 +150,7 @@ function Box(name,age){
 */
 
 // 原型
+/*
 function Box(){} // 构造函数函数体内什么都没有，这里如果有，叫做势力属性，实例方法
 
 Box.prototype.name = 'Lee';	//原型属性
@@ -197,13 +198,71 @@ function isProperty(object,property){
 };
 console.log(isProperty(box1,'name'));
 
+*/
 
+// 属性与方法封装 字面量方式
 
+function Box(){}
 
+/*
+var box = new Box();
+console.log(box.prototype); //使用对象实例无法访问到 prototype
+console.log(box.__proto__); //使用对象实例访问prototype的指针
+console.log(Box.prototype);
+*/
 
+// 使用字面量的方式创建原型对象，这里{}就是对象
+// 打印结果 function Object() { [native code] }
+Box.prototype = {
+	constructor:Box,	// 强制指向Box
+	name:'lee',
+	age:100,
+	run:function(){
+		return this.name+this.age+"runing...";
+	}
+};
 
+// 打印的结果是 function Box(){}
+/*
+Box.prototype.name = 'Lee';	//原型属性
+Box.prototype.age = 100;
+Box.prototype.run = function(){ // 原型方法
+	return this.name + this.age + "runing...";
+};
+*/
 
+var box = new Box();
+/*
+console.log(box.constructor);
+console.log(box.constructor == Object);
+*/
 
+// 重写了原型对象
+
+/*
+Box.prototype = { //这里把原来的原型对象与构造函数实例联系切断了
+				// 不会保留原来的信息
+	age:200
+}
+console.log(box.name);
+*/
+
+// 
+/*
+
+*/
+
+var box = [5,4,3,1,3,4,3]
+console.log(box.sort());
+// 查看sort 是否是原型对象里的方法
+console.log(Array.prototype.sort);
+console.log(String.prototype.substring);
+
+// 扩展已有内置引用类型的方法 不推荐 已引起命名冲突
+String.prototype.addString = function() {
+	return this+',is been added';
+}
+console.log("Lee".addString());
 
 
 
